@@ -14,8 +14,8 @@ type Order {
 }
 
 type Query {
-  patients: [Patient!]!
-  orders: [Order!]!
+  patients(id: ID): [Patient!]!
+  orders(id: ID): [Order!]!
 }
 
 input NewPatient {

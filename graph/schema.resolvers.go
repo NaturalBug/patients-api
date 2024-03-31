@@ -87,13 +87,33 @@ func (r *mutationResolver) UpdateOrder(ctx context.Context, input *model.UpdateO
 }
 
 // Patients is the resolver for the patients field.
-func (r *queryResolver) Patients(ctx context.Context) ([]*model.Patient, error) {
-	return r.patients, nil
+func (r *queryResolver) Patients(ctx context.Context, id *string) ([]*model.Patient, error) {
+	if id == nil {
+		return r.patients, nil
+	}
+
+	for i := 0; i < len(r.patients); i++ {
+		if r.patients[i].ID == *id {
+			return []*model.Patient{r.patients[i]}, nil
+		}
+	}
+
+	return nil, nil
 }
 
 // Orders is the resolver for the orders field.
-func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
-	return r.orders, nil
+func (r *queryResolver) Orders(ctx context.Context, id *string) ([]*model.Order, error) {
+	if id == nil {
+		return r.orders, nil
+	}
+
+	for i := 0; i < len(r.orders); i++ {
+		if r.orders[i].ID == *id {
+			return []*model.Order{r.orders[i]}, nil
+		}
+	}
+
+	return nil, nil
 }
 
 // Mutation returns MutationResolver implementation.
