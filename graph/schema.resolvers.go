@@ -14,7 +14,19 @@ import (
 
 // CreatePatient is the resolver for the createPatient field.
 func (r *mutationResolver) CreatePatient(ctx context.Context, input *model.NewPatient) (*model.Patient, error) {
-	panic(fmt.Errorf("not implemented: CreatePatient - createPatient"))
+	var lastId = 0
+	if len(r.patients) != 0 {
+		lastId, _ = strconv.Atoi(r.patients[len(r.patients)-1].ID)
+	}
+	newId := strconv.Itoa(lastId + 1)
+
+	patient := &model.Patient{
+		ID:   newId,
+		Name: input.Name,
+	}
+	r.patients = append(r.patients, patient)
+
+	return patient, nil
 }
 
 // UpdatePatient is the resolver for the updatePatient field.
