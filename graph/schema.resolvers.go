@@ -38,7 +38,7 @@ func (r *queryResolver) Patients(ctx context.Context) ([]*model.Patient, error) 
 
 // Orders is the resolver for the orders field.
 func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
-	panic(fmt.Errorf("not implemented: Orders - orders"))
+	return r.orders, nil
 }
 
 // Mutation returns MutationResolver implementation.
