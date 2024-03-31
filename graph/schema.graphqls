@@ -23,7 +23,8 @@ input NewPatient {
 }
 
 input UpdatePatient {
-  name: String!
+  id: ID!
+  name: String
   orderId: ID
 }
 

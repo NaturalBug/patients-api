@@ -33,6 +33,7 @@ type UpdateOrder struct {
 }
 
 type UpdatePatient struct {
-	Name    string  `json:"name"`
+	ID      string  `json:"id"`
+	Name    *string `json:"name,omitempty"`
 	OrderID *string `json:"orderId,omitempty"`
 }

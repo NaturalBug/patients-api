@@ -3000,16 +3000,23 @@ func (ec *executionContext) unmarshalInputUpdatePatient(ctx context.Context, obj
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"name", "orderId"}
+	fieldsInOrder := [...]string{"id", "name", "orderId"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
+		case "id":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+			data, err := ec.unmarshalNID2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ID = data
 		case "name":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
