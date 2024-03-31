@@ -56,6 +56,7 @@ func (r *mutationResolver) CreateOrder(ctx context.Context, input *model.NewOrde
 		lastId, _ = strconv.Atoi(r.orders[len(r.orders)-1].ID)
 	}
 	newId := strconv.Itoa(lastId + 1)
+
 	order := &model.Order{
 		ID:      newId,
 		Message: &input.Message,
