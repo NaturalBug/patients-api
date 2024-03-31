@@ -80,6 +80,7 @@ func (r *mutationResolver) UpdateOrder(ctx context.Context, input *model.UpdateO
 			break
 		}
 	}
+
 	order.Message = &input.Message
 
 	return order, nil
