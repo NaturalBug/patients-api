@@ -55,11 +55,11 @@ query findOrders($id: ID) {
 ### createPatient
 
 ```gql
-input NewPatient {
+input CreatePatientInput {
   name: String!
 }
 
-mutation createPatient($createPatientInput: NewPatient) {
+mutation createPatient($createPatientInput: CreatePatientInput) {
   createPatient(input: $createPatientInput) {
     id
     name
@@ -71,13 +71,13 @@ mutation createPatient($createPatientInput: NewPatient) {
 ### updatePatient
 
 ```gql
-input UpdatePatient {
+input UpdatePatientInput {
   id: ID!
   name: String
   orderId: ID
 }
 
-mutation updatePatient($updatePatientInput: UpdatePatient) {
+mutation updatePatient($updatePatientInput: UpdatePatientInput) {
   updatePatient(input: $updatePatientInput) {
     id
     name
@@ -89,11 +89,11 @@ mutation updatePatient($updatePatientInput: UpdatePatient) {
 ### createOrder
 
 ```gql
-input NewOrder {
+input CreateOrderInput {
   message: String!
 }
 
-mutation createOrder($createOrderInput: NewOrder) {
+mutation createOrder($createOrderInput: CreateOrderInput) {
   createOrder(input: $createOrderInput) {
     id
     message
@@ -104,12 +104,12 @@ mutation createOrder($createOrderInput: NewOrder) {
 ### updateOrder
 
 ```gql
-input UpdateOrder {
+input UpdateOrderInput {
   id: ID!
   message: String!
 }
 
-mutation updateOrder($updateOrderInput: UpdateOrder) {
+mutation updateOrder($updateOrderInput: UpdateOrderInput) {
   updateOrder(input: $updateOrderInput) {
     id
     message
