@@ -13,11 +13,6 @@ type NewPatient struct {
 	Name string `json:"name"`
 }
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
-}
-
 type Order struct {
 	ID      string  `json:"id"`
 	Message *string `json:"message,omitempty"`
@@ -33,6 +28,7 @@ type Query struct {
 }
 
 type UpdateOrder struct {
+	ID      string `json:"id"`
 	Message string `json:"message"`
 }
 
