@@ -8,6 +8,8 @@ import (
 	"context"
 	"fmt"
 
+	"strconv"
+
 	"github.com/NaturalBug/patients-api/graph/model"
 )
 
@@ -23,7 +25,19 @@ func (r *mutationResolver) UpdatePatient(ctx context.Context, input *model.Updat
 
 // CreateOrder is the resolver for the createOrder field.
 func (r *mutationResolver) CreateOrder(ctx context.Context, input *model.NewOrder) (*model.Order, error) {
-	panic(fmt.Errorf("not implemented: CreateOrder - createOrder"))
+	var lastId = 0
+	if len(r.orders) != 0 {
+		lastId, _ = strconv.Atoi(r.orders[len(r.orders)-1].ID)
+	}
+	newId := strconv.Itoa(lastId + 1)
+	order := &model.Order{
+		ID:      newId,
+		Message: &input.Message,
+	}
+
+	r.orders = append(r.orders, order)
+
+	return order, nil
 }
 
 // UpdateOrder is the resolver for the updateOrder field.
