@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 
 	"github.com/NaturalBug/patients-api/graph/model"
@@ -31,7 +30,23 @@ func (r *mutationResolver) CreatePatient(ctx context.Context, input *model.NewPa
 
 // UpdatePatient is the resolver for the updatePatient field.
 func (r *mutationResolver) UpdatePatient(ctx context.Context, input *model.UpdatePatient) (*model.Patient, error) {
-	panic(fmt.Errorf("not implemented: UpdatePatient - updatePatient"))
+	var patient *model.Patient
+
+	for i := 0; i < len(r.patients); i++ {
+		if r.patients[i].ID == input.ID {
+			patient = r.patients[i]
+		}
+	}
+
+	if input.Name != nil {
+		patient.Name = *input.Name
+	}
+
+	if input.OrderID != nil {
+		patient.OrderID = input.OrderID
+	}
+
+	return patient, nil
 }
 
 // CreateOrder is the resolver for the createOrder field.
