@@ -25,8 +25,8 @@ type Patient {
   orderId: ID
 }
 
-query findPatients {
-  patients {
+query findPatients($id: ID) {
+  patients(id: $id) {
     id
     name
     orderId
@@ -42,8 +42,8 @@ type Order {
   message: String
 }
 
-query findOrders {
-  orders {
+query findOrders($id: ID) {
+  orders(id: $id) {
     id
     message
   }
@@ -59,8 +59,8 @@ input NewPatient {
   name: String!
 }
 
-mutation createPatient {
-  createPatient(input: { name: "Patient" }) {
+mutation createPatient($createPatientInput: NewPatient) {
+  createPatient(input: $createPatientInput) {
     id
     name
     orderId
@@ -77,8 +77,8 @@ input UpdatePatient {
   orderId: ID
 }
 
-mutation updatePatient {
-  updatePatient(input: { id: "3", name: "Patient 3", orderId: "1" }) {
+mutation updatePatient($updatePatientInput: UpdatePatient) {
+  updatePatient(input: $updatePatientInput) {
     id
     name
     orderId
@@ -93,8 +93,8 @@ input NewOrder {
   message: String!
 }
 
-mutation createOrder {
-  createOrder(input: { message: "message" }) {
+mutation createOrder($createOrderInput: NewOrder) {
+  createOrder(input: $createOrderInput) {
     id
     message
   }
@@ -109,8 +109,8 @@ input UpdateOrder {
   message: String!
 }
 
-mutation updateOrder {
-  updateOrder(input: { id: "2", message: "new message" }) {
+mutation updateOrder($updateOrderInput: UpdateOrder) {
+  updateOrder(input: $updateOrderInput) {
     id
     message
   }
