@@ -7,7 +7,6 @@ package graph
 import (
 	"context"
 	"fmt"
-
 	"strconv"
 
 	"github.com/NaturalBug/patients-api/graph/model"
@@ -42,7 +41,17 @@ func (r *mutationResolver) CreateOrder(ctx context.Context, input *model.NewOrde
 
 // UpdateOrder is the resolver for the updateOrder field.
 func (r *mutationResolver) UpdateOrder(ctx context.Context, input *model.UpdateOrder) (*model.Order, error) {
-	panic(fmt.Errorf("not implemented: UpdateOrder - updateOrder"))
+	var order *model.Order
+
+	for i := 0; i < len(r.orders); i++ {
+		if r.orders[i].ID == input.ID {
+			order = r.orders[i]
+			break
+		}
+	}
+	order.Message = &input.Message
+
+	return order, nil
 }
 
 // Patients is the resolver for the patients field.
