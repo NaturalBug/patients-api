@@ -36,6 +36,7 @@ func (r *mutationResolver) UpdatePatient(ctx context.Context, input *model.Updat
 	for i := 0; i < len(r.patients); i++ {
 		if r.patients[i].ID == input.ID {
 			patient = r.patients[i]
+			break
 		}
 	}
 
