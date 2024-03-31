@@ -6,31 +6,39 @@ package graph
 
 import (
 	"context"
-	"crypto/rand"
 	"fmt"
-	"math/big"
 
 	"github.com/NaturalBug/patients-api/graph/model"
 )
 
-// CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	// panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
-	randNumber, _ := rand.Int(rand.Reader, big.NewInt(10))
-	todo := &model.Todo{
-		Text: input.Text,
-		ID:   fmt.Sprintf("T%d", randNumber),
-		User: &model.User{ID: input.UserID, Name: "user" + input.UserID},
-	}
-
-	r.todos = append(r.todos, todo)
-	return todo, nil
+// CreatePatient is the resolver for the createPatient field.
+func (r *mutationResolver) CreatePatient(ctx context.Context, input *model.NewPatient) (*model.Patient, error) {
+	panic(fmt.Errorf("not implemented: CreatePatient - createPatient"))
 }
 
-// Todos is the resolver for the todos field.
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	// panic(fmt.Errorf("not implemented: Todos - todos"))
-	return r.todos, nil
+// UpdatePatient is the resolver for the updatePatient field.
+func (r *mutationResolver) UpdatePatient(ctx context.Context, input *model.UpdatePatient) (*model.Patient, error) {
+	panic(fmt.Errorf("not implemented: UpdatePatient - updatePatient"))
+}
+
+// CreateOrder is the resolver for the createOrder field.
+func (r *mutationResolver) CreateOrder(ctx context.Context, input *model.NewOrder) (*model.Order, error) {
+	panic(fmt.Errorf("not implemented: CreateOrder - createOrder"))
+}
+
+// UpdateOrder is the resolver for the updateOrder field.
+func (r *mutationResolver) UpdateOrder(ctx context.Context, input *model.UpdateOrder) (*model.Order, error) {
+	panic(fmt.Errorf("not implemented: UpdateOrder - updateOrder"))
+}
+
+// Patients is the resolver for the patients field.
+func (r *queryResolver) Patients(ctx context.Context) ([]*model.Patient, error) {
+	panic(fmt.Errorf("not implemented: Patients - patients"))
+}
+
+// Orders is the resolver for the orders field.
+func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
+	panic(fmt.Errorf("not implemented: Orders - orders"))
 }
 
 // Mutation returns MutationResolver implementation.

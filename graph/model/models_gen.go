@@ -5,22 +5,38 @@ package model
 type Mutation struct {
 }
 
+type NewOrder struct {
+	Message string `json:"message"`
+}
+
+type NewPatient struct {
+	Name string `json:"name"`
+}
+
 type NewTodo struct {
 	Text   string `json:"text"`
 	UserID string `json:"userId"`
 }
 
+type Order struct {
+	ID      string  `json:"id"`
+	Message *string `json:"message,omitempty"`
+}
+
+type Patient struct {
+	ID      string  `json:"id"`
+	Name    string  `json:"name"`
+	OrderID *string `json:"orderId,omitempty"`
+}
+
 type Query struct {
 }
 
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
+type UpdateOrder struct {
+	Message string `json:"message"`
 }
 
-type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+type UpdatePatient struct {
+	Name    string  `json:"name"`
+	OrderID *string `json:"orderId,omitempty"`
 }
