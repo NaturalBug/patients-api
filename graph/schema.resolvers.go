@@ -14,8 +14,9 @@ import (
 // CreatePatient is the resolver for the createPatient field.
 func (r *mutationResolver) CreatePatient(ctx context.Context, input *model.NewPatient) (*model.Patient, error) {
 	var lastId = 0
-	if len(r.patients) != 0 {
-		lastId, _ = strconv.Atoi(r.patients[len(r.patients)-1].ID)
+	lengthOfPatients := len(r.patients)
+	if lengthOfPatients != 0 {
+		lastId, _ = strconv.Atoi(r.patients[lengthOfPatients-1].ID)
 	}
 	newId := strconv.Itoa(lastId + 1)
 
@@ -52,8 +53,9 @@ func (r *mutationResolver) UpdatePatient(ctx context.Context, input *model.Updat
 // CreateOrder is the resolver for the createOrder field.
 func (r *mutationResolver) CreateOrder(ctx context.Context, input *model.NewOrder) (*model.Order, error) {
 	var lastId = 0
-	if len(r.orders) != 0 {
-		lastId, _ = strconv.Atoi(r.orders[len(r.orders)-1].ID)
+	lengthOfOrders := len(r.orders)
+	if lengthOfOrders != 0 {
+		lastId, _ = strconv.Atoi(r.orders[lengthOfOrders-1].ID)
 	}
 	newId := strconv.Itoa(lastId + 1)
 
