@@ -2,15 +2,15 @@
 
 package model
 
-type Mutation struct {
-}
-
-type NewOrder struct {
+type CreateOrderInput struct {
 	Message string `json:"message"`
 }
 
-type NewPatient struct {
+type CreatePatientInput struct {
 	Name string `json:"name"`
+}
+
+type Mutation struct {
 }
 
 type Order struct {
@@ -27,12 +27,12 @@ type Patient struct {
 type Query struct {
 }
 
-type UpdateOrder struct {
+type UpdateOrderInput struct {
 	ID      string `json:"id"`
 	Message string `json:"message"`
 }
 
-type UpdatePatient struct {
+type UpdatePatientInput struct {
 	ID      string  `json:"id"`
 	Name    *string `json:"name,omitempty"`
 	OrderID *string `json:"orderId,omitempty"`

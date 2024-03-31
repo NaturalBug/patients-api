@@ -12,7 +12,7 @@ import (
 )
 
 // CreatePatient is the resolver for the createPatient field.
-func (r *mutationResolver) CreatePatient(ctx context.Context, input *model.NewPatient) (*model.Patient, error) {
+func (r *mutationResolver) CreatePatient(ctx context.Context, input *model.CreatePatientInput) (*model.Patient, error) {
 	var lastId = 0
 	lengthOfPatients := len(r.patients)
 	if lengthOfPatients != 0 {
@@ -30,7 +30,7 @@ func (r *mutationResolver) CreatePatient(ctx context.Context, input *model.NewPa
 }
 
 // UpdatePatient is the resolver for the updatePatient field.
-func (r *mutationResolver) UpdatePatient(ctx context.Context, input *model.UpdatePatient) (*model.Patient, error) {
+func (r *mutationResolver) UpdatePatient(ctx context.Context, input *model.UpdatePatientInput) (*model.Patient, error) {
 	var patient *model.Patient
 
 	for i := 0; i < len(r.patients); i++ {
@@ -52,7 +52,7 @@ func (r *mutationResolver) UpdatePatient(ctx context.Context, input *model.Updat
 }
 
 // CreateOrder is the resolver for the createOrder field.
-func (r *mutationResolver) CreateOrder(ctx context.Context, input *model.NewOrder) (*model.Order, error) {
+func (r *mutationResolver) CreateOrder(ctx context.Context, input *model.CreateOrderInput) (*model.Order, error) {
 	var lastId = 0
 	lengthOfOrders := len(r.orders)
 	if lengthOfOrders != 0 {
@@ -71,7 +71,7 @@ func (r *mutationResolver) CreateOrder(ctx context.Context, input *model.NewOrde
 }
 
 // UpdateOrder is the resolver for the updateOrder field.
-func (r *mutationResolver) UpdateOrder(ctx context.Context, input *model.UpdateOrder) (*model.Order, error) {
+func (r *mutationResolver) UpdateOrder(ctx context.Context, input *model.UpdateOrderInput) (*model.Order, error) {
 	var order *model.Order
 
 	for i := 0; i < len(r.orders); i++ {

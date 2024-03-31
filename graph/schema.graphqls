@@ -18,28 +18,28 @@ type Query {
   orders(id: ID): [Order!]!
 }
 
-input NewPatient {
+input CreatePatientInput {
   name: String!
 }
 
-input UpdatePatient {
+input UpdatePatientInput {
   id: ID!
   name: String
   orderId: ID
 }
 
-input NewOrder {
+input CreateOrderInput {
   message: String!
 }
 
-input UpdateOrder {
+input UpdateOrderInput {
   id: ID!
   message: String!
 }
 
 type Mutation {
-  createPatient(input: NewPatient): Patient!
-  updatePatient(input: UpdatePatient): Patient!
-  createOrder(input: NewOrder): Order!
-  updateOrder(input: UpdateOrder): Order!
+  createPatient(input: CreatePatientInput): Patient!
+  updatePatient(input: UpdatePatientInput): Patient!
+  createOrder(input: CreateOrderInput): Order!
+  updateOrder(input: UpdateOrderInput): Order!
 }

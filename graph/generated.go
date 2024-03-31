@@ -48,10 +48,10 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Mutation struct {
-		CreateOrder   func(childComplexity int, input *model.NewOrder) int
-		CreatePatient func(childComplexity int, input *model.NewPatient) int
-		UpdateOrder   func(childComplexity int, input *model.UpdateOrder) int
-		UpdatePatient func(childComplexity int, input *model.UpdatePatient) int
+		CreateOrder   func(childComplexity int, input *model.CreateOrderInput) int
+		CreatePatient func(childComplexity int, input *model.CreatePatientInput) int
+		UpdateOrder   func(childComplexity int, input *model.UpdateOrderInput) int
+		UpdatePatient func(childComplexity int, input *model.UpdatePatientInput) int
 	}
 
 	Order struct {
@@ -72,10 +72,10 @@ type ComplexityRoot struct {
 }
 
 type MutationResolver interface {
-	CreatePatient(ctx context.Context, input *model.NewPatient) (*model.Patient, error)
-	UpdatePatient(ctx context.Context, input *model.UpdatePatient) (*model.Patient, error)
-	CreateOrder(ctx context.Context, input *model.NewOrder) (*model.Order, error)
-	UpdateOrder(ctx context.Context, input *model.UpdateOrder) (*model.Order, error)
+	CreatePatient(ctx context.Context, input *model.CreatePatientInput) (*model.Patient, error)
+	UpdatePatient(ctx context.Context, input *model.UpdatePatientInput) (*model.Patient, error)
+	CreateOrder(ctx context.Context, input *model.CreateOrderInput) (*model.Order, error)
+	UpdateOrder(ctx context.Context, input *model.UpdateOrderInput) (*model.Order, error)
 }
 type QueryResolver interface {
 	Patients(ctx context.Context, id *string) ([]*model.Patient, error)
@@ -111,7 +111,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateOrder(childComplexity, args["input"].(*model.NewOrder)), true
+		return e.complexity.Mutation.CreateOrder(childComplexity, args["input"].(*model.CreateOrderInput)), true
 
 	case "Mutation.createPatient":
 		if e.complexity.Mutation.CreatePatient == nil {
@@ -123,7 +123,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreatePatient(childComplexity, args["input"].(*model.NewPatient)), true
+		return e.complexity.Mutation.CreatePatient(childComplexity, args["input"].(*model.CreatePatientInput)), true
 
 	case "Mutation.updateOrder":
 		if e.complexity.Mutation.UpdateOrder == nil {
@@ -135,7 +135,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdateOrder(childComplexity, args["input"].(*model.UpdateOrder)), true
+		return e.complexity.Mutation.UpdateOrder(childComplexity, args["input"].(*model.UpdateOrderInput)), true
 
 	case "Mutation.updatePatient":
 		if e.complexity.Mutation.UpdatePatient == nil {
@@ -147,7 +147,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdatePatient(childComplexity, args["input"].(*model.UpdatePatient)), true
+		return e.complexity.Mutation.UpdatePatient(childComplexity, args["input"].(*model.UpdatePatientInput)), true
 
 	case "Order.id":
 		if e.complexity.Order.ID == nil {
@@ -216,10 +216,10 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	rc := graphql.GetOperationContext(ctx)
 	ec := executionContext{rc, e, 0, 0, make(chan graphql.DeferredResult)}
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
-		ec.unmarshalInputNewOrder,
-		ec.unmarshalInputNewPatient,
-		ec.unmarshalInputUpdateOrder,
-		ec.unmarshalInputUpdatePatient,
+		ec.unmarshalInputCreateOrderInput,
+		ec.unmarshalInputCreatePatientInput,
+		ec.unmarshalInputUpdateOrderInput,
+		ec.unmarshalInputUpdatePatientInput,
 	)
 	first := true
 
@@ -339,10 +339,10 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 func (ec *executionContext) field_Mutation_createOrder_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *model.NewOrder
+	var arg0 *model.CreateOrderInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalONewOrder2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐNewOrder(ctx, tmp)
+		arg0, err = ec.unmarshalOCreateOrderInput2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐCreateOrderInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -354,10 +354,10 @@ func (ec *executionContext) field_Mutation_createOrder_args(ctx context.Context,
 func (ec *executionContext) field_Mutation_createPatient_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *model.NewPatient
+	var arg0 *model.CreatePatientInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalONewPatient2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐNewPatient(ctx, tmp)
+		arg0, err = ec.unmarshalOCreatePatientInput2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐCreatePatientInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -369,10 +369,10 @@ func (ec *executionContext) field_Mutation_createPatient_args(ctx context.Contex
 func (ec *executionContext) field_Mutation_updateOrder_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *model.UpdateOrder
+	var arg0 *model.UpdateOrderInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalOUpdateOrder2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐUpdateOrder(ctx, tmp)
+		arg0, err = ec.unmarshalOUpdateOrderInput2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐUpdateOrderInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -384,10 +384,10 @@ func (ec *executionContext) field_Mutation_updateOrder_args(ctx context.Context,
 func (ec *executionContext) field_Mutation_updatePatient_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *model.UpdatePatient
+	var arg0 *model.UpdatePatientInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalOUpdatePatient2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐUpdatePatient(ctx, tmp)
+		arg0, err = ec.unmarshalOUpdatePatientInput2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐUpdatePatientInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -493,7 +493,7 @@ func (ec *executionContext) _Mutation_createPatient(ctx context.Context, field g
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreatePatient(rctx, fc.Args["input"].(*model.NewPatient))
+		return ec.resolvers.Mutation().CreatePatient(rctx, fc.Args["input"].(*model.CreatePatientInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -556,7 +556,7 @@ func (ec *executionContext) _Mutation_updatePatient(ctx context.Context, field g
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().UpdatePatient(rctx, fc.Args["input"].(*model.UpdatePatient))
+		return ec.resolvers.Mutation().UpdatePatient(rctx, fc.Args["input"].(*model.UpdatePatientInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -619,7 +619,7 @@ func (ec *executionContext) _Mutation_createOrder(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateOrder(rctx, fc.Args["input"].(*model.NewOrder))
+		return ec.resolvers.Mutation().CreateOrder(rctx, fc.Args["input"].(*model.CreateOrderInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -680,7 +680,7 @@ func (ec *executionContext) _Mutation_updateOrder(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().UpdateOrder(rctx, fc.Args["input"].(*model.UpdateOrder))
+		return ec.resolvers.Mutation().UpdateOrder(rctx, fc.Args["input"].(*model.UpdateOrderInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2967,8 +2967,8 @@ func (ec *executionContext) fieldContext___Type_specifiedByURL(ctx context.Conte
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputNewOrder(ctx context.Context, obj interface{}) (model.NewOrder, error) {
-	var it model.NewOrder
+func (ec *executionContext) unmarshalInputCreateOrderInput(ctx context.Context, obj interface{}) (model.CreateOrderInput, error) {
+	var it model.CreateOrderInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -2994,8 +2994,8 @@ func (ec *executionContext) unmarshalInputNewOrder(ctx context.Context, obj inte
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputNewPatient(ctx context.Context, obj interface{}) (model.NewPatient, error) {
-	var it model.NewPatient
+func (ec *executionContext) unmarshalInputCreatePatientInput(ctx context.Context, obj interface{}) (model.CreatePatientInput, error) {
+	var it model.CreatePatientInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -3021,8 +3021,8 @@ func (ec *executionContext) unmarshalInputNewPatient(ctx context.Context, obj in
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputUpdateOrder(ctx context.Context, obj interface{}) (model.UpdateOrder, error) {
-	var it model.UpdateOrder
+func (ec *executionContext) unmarshalInputUpdateOrderInput(ctx context.Context, obj interface{}) (model.UpdateOrderInput, error) {
+	var it model.UpdateOrderInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -3055,8 +3055,8 @@ func (ec *executionContext) unmarshalInputUpdateOrder(ctx context.Context, obj i
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputUpdatePatient(ctx context.Context, obj interface{}) (model.UpdatePatient, error) {
-	var it model.UpdatePatient
+func (ec *executionContext) unmarshalInputUpdatePatientInput(ctx context.Context, obj interface{}) (model.UpdatePatientInput, error) {
+	var it model.UpdatePatientInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -4121,6 +4121,22 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
+func (ec *executionContext) unmarshalOCreateOrderInput2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐCreateOrderInput(ctx context.Context, v interface{}) (*model.CreateOrderInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputCreateOrderInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalOCreatePatientInput2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐCreatePatientInput(ctx context.Context, v interface{}) (*model.CreatePatientInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputCreatePatientInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalOID2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
 	if v == nil {
 		return nil, nil
@@ -4135,22 +4151,6 @@ func (ec *executionContext) marshalOID2ᚖstring(ctx context.Context, sel ast.Se
 	}
 	res := graphql.MarshalID(*v)
 	return res
-}
-
-func (ec *executionContext) unmarshalONewOrder2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐNewOrder(ctx context.Context, v interface{}) (*model.NewOrder, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := ec.unmarshalInputNewOrder(ctx, v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) unmarshalONewPatient2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐNewPatient(ctx context.Context, v interface{}) (*model.NewPatient, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := ec.unmarshalInputNewPatient(ctx, v)
-	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
@@ -4169,19 +4169,19 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
-func (ec *executionContext) unmarshalOUpdateOrder2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐUpdateOrder(ctx context.Context, v interface{}) (*model.UpdateOrder, error) {
+func (ec *executionContext) unmarshalOUpdateOrderInput2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐUpdateOrderInput(ctx context.Context, v interface{}) (*model.UpdateOrderInput, error) {
 	if v == nil {
 		return nil, nil
 	}
-	res, err := ec.unmarshalInputUpdateOrder(ctx, v)
+	res, err := ec.unmarshalInputUpdateOrderInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalOUpdatePatient2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐUpdatePatient(ctx context.Context, v interface{}) (*model.UpdatePatient, error) {
+func (ec *executionContext) unmarshalOUpdatePatientInput2ᚖgithubᚗcomᚋNaturalBugᚋpatientsᚑapiᚋgraphᚋmodelᚐUpdatePatientInput(ctx context.Context, v interface{}) (*model.UpdatePatientInput, error) {
 	if v == nil {
 		return nil, nil
 	}
-	res, err := ec.unmarshalInputUpdatePatient(ctx, v)
+	res, err := ec.unmarshalInputUpdatePatientInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
