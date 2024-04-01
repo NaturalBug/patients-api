@@ -116,3 +116,30 @@ mutation updateOrder($updateOrderInput: UpdateOrderInput) {
   }
 }
 ```
+
+## PostgreSQL
+
+### patients
+
+```sql
+create table patients
+(
+	Id serial not null,
+	Name varchar(100),
+	OrderId int,
+	primary key(Id),
+	constraint fk_OrderId
+		foreign key(OrderId)
+		references orders(Id)
+)
+```
+
+### orders
+
+```sql
+create table orders
+(
+	Id serial not null,
+	Message Text
+)
+```
