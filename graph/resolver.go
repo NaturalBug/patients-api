@@ -1,9 +1,8 @@
 package graph
 
 import (
-	"database/sql"
-
 	"github.com/NaturalBug/patients-api/graph/model"
+	"github.com/NaturalBug/patients-api/postgres"
 )
 
 // This file will not be regenerated automatically.
@@ -13,5 +12,5 @@ import (
 type Resolver struct {
 	patients []*model.Patient
 	orders   []*model.Order
-	DB       *sql.DB
+	DB       *postgres.Db
 }

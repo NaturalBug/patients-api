@@ -1,8 +1,6 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -10,6 +8,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/NaturalBug/patients-api/graph"
+	"github.com/NaturalBug/patients-api/postgres"
 	_ "github.com/lib/pq"
 )
 
@@ -22,25 +21,16 @@ const (
 	PORT     = "1234"
 )
 
-func checkError(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
+var db *postgres.Db
 
 func main() {
-	// Initialize connection string.
-	var connectionString string = fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable port=%s", HOST, USER, PASSWORD, DATABASE, PORT)
-
 	// Initialize connection object.
-	db, err := sql.Open("postgres", connectionString)
-	checkError(err)
-
+	db, err := postgres.Connect(postgres.BuildConnectionString("localhost", 1234, "admin", "12345", "patient"))
 	defer db.Close()
 
-	err = db.Ping()
-	checkError(err)
-	fmt.Println("Successfully created connection to database")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{DB: db}}))
 
