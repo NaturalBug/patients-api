@@ -30,7 +30,7 @@ func Connect(connectionString string) (*Db, error) {
 }
 
 func BuildConnectionString(host string, port int, user string, password string, dbName string) string {
-	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable ", host, port, user, password, dbName)
+	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable ", host, port, user, password, dbName)
 }
 
 func (db Db) GetAllPatients() ([]Patient, error) {
