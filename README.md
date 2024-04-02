@@ -1,5 +1,13 @@
 # patients-api
 
+The project is built for
+https://github.com/NaturalBug/patients-management-system
+
+## Todo
+
+- Implement functions in postgres.go
+- schema.resolvers.go use `postgres` to get data in DB and get rid of using patients and orders in Resolver
+
 ## Usage
 
 ### Run at local
